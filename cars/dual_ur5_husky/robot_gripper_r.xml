@@ -1,0 +1,101 @@
+<mujoco>
+    <!-- change the gripper's orientation to adapt the real robot -->
+    <body name="r_gripper" pos="0 -0.037547 0"  quat="0.676 0 -0.737 0">
+        <body name="r_gripper_palm_link" pos="1.64197e-10 0.17378 7.2848e-05" quat="-0.382132 8.29339e-10 0.924108 0.000735892" childclass="gripper:black">
+        <!-- <body name="r_gripper_palm_link" pos="1.64197e-10 0.136233 7.2848e-05" quat="-0.382132 8.29339e-10 0.924108 0.000735892" childclass="gripper:black"> -->
+            <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="palm" />
+            <geom name="r_gripper_palm" type="mesh" group="0" mesh="collision_palm" />
+            <!-- <geom size="0.05 0.05 0.05" type="box" /> -->
+            <!-- https://github.com/StanfordVL/robosuite/blob/7b727b075607466662ba8fac8bf8634936bdc58d/robosuite/models/assets/grippers/robotiq_gripper_s.xml#L32 -->
+            <site name="r_grip_site" pos="0 0.1 0" size="0.01" rgba="1 0 0 1" type="sphere" group="1"/>
+            <!-- <site name="r_grip_site_cylinder" quat="0 0 0.707 0.707" pos="0 0 0" size="0.005 0.5" rgba="0 1 0 0.3" type="cylinder" group="1"></site> -->
+        </body>
+        <body name="r_finger_1_link_0" pos="0.00679839 0.195255 -0.0575191" quat="-0.653702 -0.270618 -0.269798 -0.653184" childclass="GRIPPER">
+        <!-- <body name="r_finger_1_link_0" pos="0.00679839 0.157715 -0.0575191" quat="-0.653702 -0.270618 -0.269798 -0.653184" childclass="GRIPPER"> -->
+            <inertial pos="-0.01 0 0" quat="0.5 0.5 0.5 0.5" mass="0.1" diaginertia="2.5e-05 2.5e-05 1.8e-05" />
+            <joint name="r_palm_finger_1_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-0.16 0.25" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="link_0" />
+            <geom name="f1_l0" type="mesh" group="0" mesh="collision_link_0" />
+            <!-- <geom type="mesh" mesh="link_0" /> -->
+            <body name="r_finger_1_link_1" pos="0 0 0" quat="0.501642 0 0 -0.865075">
+                <inertial pos="0.00053 0.03218 0" quat="0.00544471 0.00542787 0.707078 0.707093" mass="0.047" diaginertia="6.43594e-05 6.06192e-05 4.97928e-06" />
+                <joint name="r_finger_1_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="0 3.1416" />
+                <geom pos="0 0.05717 0" quat="0.707105 0 0 0.707108" type="mesh" contype="0" conaffinity="0" group="1" mesh="link_1" />
+                <geom name="f1_l1" type="mesh" group="0" pos="0 0.05717 0" quat="0.707105 0 0 0.707108" mesh="collision_link_1" />
+                <!-- <geom pos="0 0.05717 0" quat="0.707105 0 0 0.707108" type="mesh" mesh="link_1" /> -->
+                <body name="r_finger_1_link_2" pos="0 0.05715 0">
+                    <inertial pos="0.00048 0.02167 0.00018" quat="0.00523005 0.00665272 0.709882 0.70427" mass="0.03284" diaginertia="2.24866e-05 1.98645e-05 3.47368e-06" />
+                    <joint name="r_finger_1_joint_2" pos="0 0 0" axis="0 0 1" limited="true" range="0 3.1416" />
+                    <geom pos="0 0.0381 0.0075" quat="0.707105 0 0 0.707108" type="mesh" contype="0" conaffinity="0" group="1" mesh="link_2" />
+                    <geom name="f1_l2" pos="0 0.0381 0.0075" quat="0.707105 0 0 0.707108" type="mesh" mesh="collision_link_2" />
+                    <!-- <geom pos="0 0.0381 0.0075" quat="0.707105 0 0 0.707108" type="mesh" mesh="link_2" /> -->
+                    <body name="r_finger_1_link_3" pos="0 0.039 0" quat="0.501642 0 0 0.865075">
+                        <inertial pos="0.01626 0.00049 0.0002" quat="0.520969 0.517877 0.481643 0.477927" mass="0.03354" diaginertia="1.43512e-05 1.26412e-05 2.98016e-06" />
+                        <joint name="r_finger_1_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="0 3.1416" />
+                        <geom type="mesh" contype="0" conaffinity="0" group="1" class="gripper:white" mesh="link_3" />
+                        <!-- <geom type="mesh" class="gripper:white" mesh="link_3" /> -->
+                        <geom name="f1_l3" type="mesh" class="gripper:white" mesh="collision_link_3" />
+                    </body>
+                </body>
+            </body>
+        </body>
+        <body name="r_finger_2_link_0" pos="0.0576492 0.195157 -0.00654675" quat="-0.653702 -0.270618 -0.269798 -0.653184" childclass="GRIPPER">
+        <!-- <body name="r_finger_2_link_0" pos="0.0576492 0.15761 -0.00654675" quat="-0.653702 -0.270618 -0.269798 -0.653184" childclass="GRIPPER"> -->
+            <inertial pos="-0.01 0 0" quat="0.5 0.5 0.5 0.5" mass="0.1" diaginertia="2.5e-05 2.5e-05 1.8e-05" />
+            <joint name="r_palm_finger_2_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-0.25 0.16" />
+            <geom type="mesh" contype="0" conaffinity="0" group="1" mesh="link_0" />
+            <geom name="f2_l0" type="mesh" mesh="collision_link_0" />
+            <!-- <geom type="mesh" mesh="link_0" /> -->
+            <body name="r_finger_2_link_1" pos="0 0 0" quat="0.501642 0 0 -0.865075">
+                <inertial pos="0.00053 0.03218 0" quat="0.00544471 0.00542787 0.707078 0.707093" mass="0.047" diaginertia="6.43594e-05 6.06192e-05 4.97928e-06" />
+                <joint name="r_finger_2_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="0 3.1416" />
+                <geom pos="0 0.05717 0" quat="0.707105 0 0 0.707108" type="mesh" contype="0" conaffinity="0" group="1" mesh="link_1" />
+                <geom name="f2_l1" pos="0 0.05717 0" quat="0.707105 0 0 0.707108" type="mesh" mesh="collision_link_1" />
+                <!-- <geom pos="0 0.05717 0" quat="0.707105 0 0 0.707108" type="mesh" mesh="link_1" /> -->
+                <body name="r_finger_2_link_2" pos="0 0.05715 0">
+                    <inertial pos="0.00048 0.02167 0.00018" quat="0.00523005 0.00665272 0.709882 0.70427" mass="0.03284" diaginertia="2.24866e-05 1.98645e-05 3.47368e-06" />
+                    <joint name="r_finger_2_joint_2" pos="0 0 0" axis="0 0 1" limited="true" range="0 3.1416" />
+                    <geom pos="0 0.0381 0.0075" quat="0.707105 0 0 0.707108" type="mesh" contype="0" conaffinity="0" group="1" mesh="link_2" />
+                    <geom name="f2_l2" pos="0 0.0381 0.0075" quat="0.707105 0 0 0.707108" type="mesh" mesh="collision_link_2" />
+                    <!-- <geom pos="0 0.0381 0.0075" quat="0.707105 0 0 0.707108" type="mesh" mesh="link_2" /> -->
+                    <body name="r_finger_2_link_3" pos="0 0.039 0" quat="0.501642 0 0 0.865075">
+                        <inertial pos="0.01626 0.00049 0.0002" quat="0.520969 0.517877 0.481643 0.477927" mass="0.03354" diaginertia="1.43512e-05 1.26412e-05 2.98016e-06" />
+                        <joint name="r_finger_2_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="0 3.1416" />
+                        <geom type="mesh" contype="0" conaffinity="0" group="1" class="gripper:white" mesh="link_3" />
+                        <geom name="f2_l3" type="mesh" class="gripper:white" mesh="collision_link_3" />
+                        <!-- <geom type="mesh" class="gripper:white" mesh="link_3" /> -->
+                    </body>
+                </body>
+            </body>
+        </body>
+        <body name="r_finger_middle_link_0" pos="-0.0321997 0.195154 0.0322368" quat="-0.270836 0.653183 0.653703 -0.26958" childclass="GRIPPER" >
+        <!-- <body name="r_finger_middle_link_0" pos="-0.0321997 0.157607 0.0322368" quat="-0.270836 0.653183 0.653703 -0.26958" childclass="GRIPPER" > -->
+            <inertial pos="-0.01 0 0" quat="0.5 0.5 0.5 0.5" mass="0.1" diaginertia="2.5e-05 2.5e-05 1.8e-05" />
+            <joint name="r_palm_finger_middle_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-1e-3 1e-3"/>
+            <geom type="mesh" contype="0" conaffinity="0" group="1"  mesh="link_0" />
+            <geom name="f3_l0" type="mesh" mesh="collision_link_0" />
+            <!-- <geom type="mesh" mesh="link_0" /> -->
+            <body name="r_finger_middle_link_1" pos="0 0 0" quat="0.501642 0 0 -0.865075">
+                <inertial pos="0.00053 0.03218 0" quat="0.00544471 0.00542787 0.707078 0.707093" mass="0.047" diaginertia="6.43594e-05 6.06192e-05 4.97928e-06" />
+                <joint name="r_finger_middle_joint_1" pos="0 0 0" axis="0 0 1" limited="true" range="0 3.1416" />
+                <geom pos="0 0.05717 0" quat="0.707105 0 0 0.707108" type="mesh" contype="0" conaffinity="0" group="1"  mesh="link_1" />
+                <geom name="f3_l1" pos="0 0.05717 0" quat="0.707105 0 0 0.707108" type="mesh" mesh="collision_link_1" />
+                <!-- <geom pos="0 0.05717 0" quat="0.707105 0 0 0.707108" type="mesh" mesh="link_1" /> -->
+                <body name="r_finger_middle_link_2" pos="0 0.05715 0">
+                    <inertial pos="0.00048 0.02167 0.00018" quat="0.00523005 0.00665272 0.709882 0.70427" mass="0.03284" diaginertia="2.24866e-05 1.98645e-05 3.47368e-06" />
+                    <joint name="r_finger_middle_joint_2" pos="0 0 0" axis="0 0 1" limited="true" range="0 3.1416" />
+                    <geom pos="0 0.0381 0.0075" quat="0.707105 0 0 0.707108" type="mesh" contype="0" conaffinity="0" group="1"  mesh="link_2" />
+                    <geom name="f3_l2" pos="0 0.0381 0.0075" quat="0.707105 0 0 0.707108" type="mesh"  mesh="collision_link_2" />
+                    <!-- <geom pos="0 0.0381 0.0075" quat="0.707105 0 0 0.707108" type="mesh"  mesh="link_2" /> -->
+                    <body name="r_finger_middle_link_3" pos="0 0.039 0" quat="0.501642 0 0 0.865075">
+                        <inertial pos="0.01626 0.00049 0.0002" quat="0.520969 0.517877 0.481643 0.477927" mass="0.03354" diaginertia="1.43512e-05 1.26412e-05 2.98016e-06" />
+                        <joint name="r_finger_middle_joint_3" pos="0 0 0" axis="0 0 1" limited="true" range="0 3.1416" />
+                        <geom type="mesh" contype="0" conaffinity="0" group="1" class="gripper:white" mesh="link_3" />
+                        <geom name="f3_l3" type="mesh" class="gripper:white" mesh="collision_link_3" />
+                        <!-- <geom type="mesh" class="gripper:white" mesh="link_3" /> -->
+                    </body>
+                </body>
+            </body>
+        </body>
+    </body>
+</mujoco>

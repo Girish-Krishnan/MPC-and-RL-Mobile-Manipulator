@@ -1,0 +1,248 @@
+<mujoco>
+  <compiler meshdir="../../cars/meshes" />
+  <option integrator="implicitfast"/>
+  <asset>
+    <!-- Original car assets -->
+    <mesh name="buddy_mushr_base_nano" file="mushr_base_nano.stl"/>
+    <mesh name="buddy_mushr_wheel" file="mushr_wheel.stl"/>
+    <mesh name="buddy_mushr_ydlidar" file="mushr_ydlidar.stl"/>
+    <texture name="grid" type="2d" builtin="checker" rgb1=".1 .2 .3" 
+     rgb2=".2 .3 .4" width="300" height="300"/>
+    <material name="grid" texture="grid" texrepeat="8 8" reflectance=".2"/>
+
+    <!-- UR5E meshes -->
+    <material class="ur5e" name="black" rgba="0.033 0.033 0.033 1"/>
+    <material class="ur5e" name="jointgray" rgba="0.278 0.278 0.278 1"/>
+    <material class="ur5e" name="linkgray" rgba="0.82 0.82 0.82 1"/>
+    <material class="ur5e" name="urblue" rgba="0.49 0.678 0.8 1"/>
+
+    <mesh file="ur5e/base_0.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/base_1.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/shoulder_0.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/shoulder_1.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/shoulder_2.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/upperarm_0.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/upperarm_1.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/upperarm_2.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/upperarm_3.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/forearm_0.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/forearm_1.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/forearm_2.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/forearm_3.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/wrist1_0.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/wrist1_1.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/wrist1_2.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/wrist2_0.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/wrist2_1.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/wrist2_2.obj"  scale="0.5 0.5 0.5"/>
+    <mesh file="ur5e/wrist3.obj"  scale="0.5 0.5 0.5"/>
+    
+  </asset>
+
+  <default>
+    <default class="buddy_wheel">
+      <geom fitscale="1.2" type="ellipsoid" friction="2 0.005 0.0001" contype="1" conaffinity="1" mesh="buddy_mushr_wheel" mass="0.498952" rgba="0 0 0 0"/>
+    </default>
+    <default class="buddy_steering_wheel">
+      <geom fitscale="1.2" type="ellipsoid" friction="2 0.005 0.0001" contype="1" conaffinity="1" mesh="buddy_mushr_wheel" mass="0.498952" rgba="0 0 0 0"/>
+    </default>
+    <default class="buddy_steering">
+      <joint type="hinge" axis="0 0 1" limited="true" frictionloss="0.01" damping="0.001" armature="0.0002" range="-0.38 0.38"/>
+    </default>
+    <default class="buddy_throttle">
+      <joint type="hinge" axis="0 1 0" frictionloss="0.001" damping="0.01" armature="0.01" limited="false"/>
+    </default>
+
+
+    <default class="ur5e">
+      <material specular="0.5" shininess="0.25"/>
+      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1"/>
+      <general gaintype="fixed" biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="2000" biasprm="0 -2000 -400"
+        forcerange="-150 150"/>
+      <default class="size3">
+        <default class="size3_limited">
+          <joint range="-3.1415 3.1415"/>
+          <general ctrlrange="-3.1415 3.1415"/>
+        </default>
+      </default>
+      <default class="size1">
+        <general gainprm="500" biasprm="0 -500 -100" forcerange="-28 28"/>
+      </default>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="collision">
+        <geom type="capsule" group="3"/>
+        <default class="eef_collision">
+          <geom type="cylinder"/>
+        </default>
+      </default>
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <body name="buddy" pos="0.0 0.0 0.0" euler="0 0 0.0">
+      <!-- Original car components -->
+      <camera name="buddy_third_person" mode="fixed" pos="-1 0 1" xyaxes="0 -1 0 0.707 0 0.707"/>
+      <camera name="buddy_realsense_d435i" mode="fixed" pos="-0.005 0 .165" euler="0 4.712 4.712"/>
+      <site name="buddy_imu" pos="-0.005 0 .165"/>
+      <camera name="overhead_track" mode="track" pos="0 0 9" euler="0 0 0"/>
+      <geom pos="0 0 0.094655" contype="0" conaffinity="0" type="mesh" mass="3.542137" mesh="buddy_mushr_base_nano"/>
+      <geom name="buddy_realsense_d435i" contype="0" conaffinity="0" size="0.012525 0.045 0.0125" pos="0.0123949 0 0.162178" mass="0.072" type="box"/>
+      <geom name="buddy_ydlidar" contype="0" conaffinity="0" pos="-0.035325 0 0.202405" type="mesh" mass="0.180" mesh="buddy_mushr_ydlidar"/>
+      <geom name="buddy_pusher_connector" contype="0" conaffinity="0" pos="0.2073 0 0.063" type="box" size="0.0025 0.025 0.02" mass="0.01"/>
+      <geom name="buddy_pusher" contype="0" conaffinity="0" pos="0.215 0 0.048" type="box" size=".005 .11 .035" mass="0.05"/>
+
+      <!-- Wheels -->
+      <body name="buddy_steering_wheel" pos="0.1385 0 0.0488">
+        <joint class="buddy_steering" name="buddy_steering_wheel"/>
+        <geom class="buddy_steering_wheel" contype="0" conaffinity="0" mass="0.01" rgba="0 0 0 1.0"/>
+      </body>
+
+      <body name="buddy_wheel_fl" pos="0.1385 0.115 0.0488">
+        <joint class="buddy_steering" name="buddy_wheel_fl_steering"/>
+        <joint class="buddy_throttle" name="buddy_wheel_fl_throttle"/>
+        <geom class="buddy_wheel"/>
+        <geom class="buddy_wheel" type="mesh" contype="0" conaffinity="0" group="1" rgba="1 1 1 1"/>
+      </body>
+      <body name="buddy_wheel_fr" pos="0.1385 -0.115 0.0488">
+        <joint class="buddy_steering" name="buddy_wheel_fr_steering"/>
+        <joint class="buddy_throttle" name="buddy_wheel_fr_throttle"/>
+        <geom class="buddy_wheel"/>
+        <geom class="buddy_wheel" type="mesh" contype="0" conaffinity="0" group="1" rgba="1 1 1 1"/>
+      </body>
+      <body name="buddy_wheel_bl" pos="-0.158 0.115 0.0488">
+        <joint class="buddy_throttle" name="buddy_wheel_bl_throttle"/>
+        <geom class="buddy_wheel"/>
+        <geom class="buddy_wheel" type="mesh" contype="0" conaffinity="0" group="1" rgba="1 1 1 1"/>
+      </body>
+      <body name="buddy_wheel_br" pos="-0.158 -0.115 0.0488">
+        <joint class="buddy_throttle" name="buddy_wheel_br_throttle"/>
+        <geom class="buddy_wheel"/>
+        <geom class="buddy_wheel" type="mesh" contype="0" conaffinity="0" group="1" rgba="1 1 1 1"/>
+      </body>
+
+      <!-- UR5E components -->
+       <light name="spotlight" mode="targetbodycom" target="wrist_2_link" pos="0 -1 2"/>
+<body name="base" quat="1 0 0 0" pos="-0.05 0 0.2" childclass="ur5e">
+  <inertial mass="0.5" pos="0 0 0" diaginertia="0.000554166 0.000554166 0.0009"/>
+  <geom mesh="base_0" material="black" class="visual"  />
+  <geom mesh="base_1" material="jointgray" class="visual"  />
+  <body name="shoulder_link" pos="0 0 0.0815">
+    <inertial mass="0.4625" pos="0 0 0" diaginertia="0.0012834375 0.0012834375 0.0008325"/>
+    <joint name="shoulder_pan_joint" class="size3" axis="0 0 1"/>
+    <geom mesh="shoulder_0" material="urblue" class="visual"  />
+    <geom mesh="shoulder_1" material="black" class="visual"  />
+    <geom mesh="shoulder_2" material="jointgray" class="visual"  />
+    <geom class="collision" size="0.03 0.03" pos="0 0 -0.02"/>
+    <body name="upper_arm_link" pos="0 0.069 0" quat="1 0 1 0">
+      <inertial mass="1.049125" pos="0 0 0.10625" diaginertia="0.01673575 0.01673575 0.0018884375"/>
+      <joint name="shoulder_lift_joint" class="size3"/>
+      <geom mesh="upperarm_0" material="linkgray" class="visual"  />
+      <geom mesh="upperarm_1" material="black" class="visual"  />
+      <geom mesh="upperarm_2" material="jointgray" class="visual"  />
+      <geom mesh="upperarm_3" material="urblue" class="visual"  />
+      <geom class="collision" pos="0 -0.02 0" quat="1 1 0 0" size="0.03 0.03"/>
+      <geom class="collision" size="0.025 0.1" pos="0 0 0.1"/>
+      <body name="forearm_link" pos="0 -0.0655 0.2125">
+        <inertial mass="0.284375" pos="0 0 0.098" diaginertia="0.00389745 0.00389745 0.000511875"/>
+        <joint name="elbow_joint" class="size3_limited"/>
+        <geom mesh="forearm_0" material="urblue" class="visual"  />
+        <geom mesh="forearm_1" material="linkgray" class="visual"  />
+        <geom mesh="forearm_2" material="black" class="visual"  />
+        <geom mesh="forearm_3" material="jointgray" class="visual"  />
+        <geom class="collision" pos="0 0.04 0" quat="1 1 0 0" size="0.0275 0.03"/>
+        <geom class="collision" size="0.019 0.095" pos="0 0 0.1"/>
+        <body name="wrist_1_link" pos="0 0 0.196" quat="1 0 1 0">
+          <inertial mass="0.152375" pos="0 0.0635 0" diaginertia="0.0003199875 0.0003199875 0.000274275"/>
+          <joint name="wrist_1_joint" class="size1"/>
+          <geom mesh="wrist1_0" material="black" class="visual"  />
+          <geom mesh="wrist1_1" material="urblue" class="visual"  />
+          <geom mesh="wrist1_2" material="jointgray" class="visual"  />
+          <geom class="collision" pos="0 0.025 0" quat="1 1 0 0" size="0.02 0.035"/>
+          <body name="wrist_2_link" pos="0 0.0635 0">
+            <inertial mass="0.152375" pos="0 0 0.05" diaginertia="0.0003199875 0.0003199875 0.000274275"/>
+            <joint name="wrist_2_joint" axis="0 0 1" class="size1"/>
+            <geom mesh="wrist2_0" material="black" class="visual"  />
+            <geom mesh="wrist2_1" material="urblue" class="visual"  />
+            <geom mesh="wrist2_2" material="jointgray" class="visual"  />
+            <geom class="collision" size="0.02 0.03" pos="0 0 0.02"/>
+            <geom class="collision" pos="0 0.01 0.05" quat="1 1 0 0" size="0.02 0.02"/>
+            <body name="wrist_3_link" pos="0 0 0.05">
+              <inertial mass="0.0236125" pos="0 0.0385842 0" quat="1 0 0 1"
+                diaginertia="0.0000165167 0.0000123858 0.0000123858"/>
+              <joint name="wrist_3_joint" class="size1"/>
+              <geom material="linkgray" mesh="wrist3" class="visual"  />
+              <geom class="eef_collision" pos="0 0.04 0" quat="1 1 0 0" size="0.02 0.01"/>
+              <body name="tool0_link" pos="0 0.05 0" quat="-1 1 0 0">
+                <site name="attachment_site" pos="0 0 0" quat="1 0 0 0"/>
+                <site name="eef_site" pos="0 0 0.025" quat="0 0.7071068 -0.7071068 0"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </body>
+</body>
+
+
+    </body>
+  </worldbody>
+
+  <actuator>
+    <position class="buddy_steering" kp="25.0" name="buddy_steering_pos" joint="buddy_steering_wheel" ctrllimited="true" ctrlrange="-0.38 0.38"/>
+    <velocity kv="100" gear="0.04" forcelimited="true" forcerange="-50 50" name="buddy_throttle_velocity" tendon="buddy_throttle" ctrllimited="true" ctrlrange="-1 3"/>
+    
+    <general class="size3" name="shoulder_pan" joint="shoulder_pan_joint"/>
+    <general class="size3" name="shoulder_lift" joint="shoulder_lift_joint"/>
+    <general class="size3_limited" name="elbow" joint="elbow_joint"/>
+    <general class="size1" name="wrist_1" joint="wrist_1_joint"/>
+    <general class="size1" name="wrist_2" joint="wrist_2_joint"/>
+    <general class="size1" name="wrist_3" joint="wrist_3_joint"/>
+  </actuator>
+
+  <equality>
+    <!-- taylor expansion of delta_l = arctan(L/(L/tan(delta) - W/2)) with L,W in reference to kinematic car model -->
+    <joint joint1="buddy_wheel_fl_steering" joint2="buddy_steering_wheel" polycoef="0 1 0.375 0.140625 -0.0722656"/>
+
+    <!-- taylor expansion of delta_r = arctan(L/(L/tan(delta) + W/2)) with L,W in reference to kinematic car model -->
+    <joint joint1="buddy_wheel_fr_steering" joint2="buddy_steering_wheel" polycoef="0 1 -0.375 0.140625 0.0722656"/>
+  </equality>
+  <tendon>
+    <fixed name="buddy_throttle">
+      <joint joint="buddy_wheel_fl_throttle" coef="0.25"/>
+      <joint joint="buddy_wheel_fr_throttle" coef="0.25"/>
+      <joint joint="buddy_wheel_bl_throttle" coef="0.25"/>
+      <joint joint="buddy_wheel_br_throttle" coef="0.25"/>
+    </fixed>
+  </tendon>
+
+  <sensor>
+    <!-- Original sensors -->
+    <accelerometer name="buddy_accelerometer" site="buddy_imu" />
+    <framequat name="framequat" objtype="body" objname="buddy" />
+    <gyro name="buddy_gyro" site="buddy_imu" />
+    <velocimeter name="velocimeter" site="buddy_imu" />
+    <jointpos name="buddy_steering_pos" joint="buddy_steering_wheel" />
+    <jointvel name="buddy_steering_vel" joint="buddy_steering_wheel" />
+    <jointvel name="buddy_wheel_fl_vel" joint="buddy_wheel_fl_throttle" />
+    <jointvel name="buddy_wheel_fr_vel" joint="buddy_wheel_fr_throttle" />
+    <jointvel name="buddy_wheel_bl_vel" joint="buddy_wheel_bl_throttle" />
+    <jointvel name="buddy_wheel_br_vel" joint="buddy_wheel_br_throttle" />
+
+    <!-- UR5E sensors -->
+    <jointpos name="shoulder_pan" joint="shoulder_pan_joint"/>
+    <jointpos name="shoulder_lift" joint="shoulder_lift_joint"/>
+    <jointpos name="elbow" joint="elbow_joint"/>
+    <jointpos name="wrist_1" joint="wrist_1_joint"/>
+    <jointpos name="wrist_2" joint="wrist_2_joint"/>
+    <jointpos name="wrist_3" joint="wrist_3_joint"/>
+  </sensor>
+
+  <keyframe>
+  <key name="home" qpos="0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0"/>
+</keyframe>
+
+</mujoco>

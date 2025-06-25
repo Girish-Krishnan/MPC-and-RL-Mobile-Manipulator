@@ -1,0 +1,56 @@
+<mujoco>
+    
+    <!-- <body name="r_ur5_arm_shoulder_link" pos="0.12505 -0.21302 0.42307" quat="0 0 0.3826834 -0.9238795" childclass="ur5:blue"> -->
+    <body name="r_ur5_arm_shoulder_link" pos="0.12505 -0.21302 0.42307" quat="0.653595 0.27036 0.270576 -0.653075" childclass="ur5:blue">
+        <inertial pos="0 0 0" mass="3.7" diaginertia="0.0102675 0.0102675 0.00666" />
+        <joint class="UR5" name="r_ur5_arm_shoulder_pan_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-3.14159 3.14159" />
+        <geom type="mesh" contype="0" conaffinity="0" group="1"  mesh="shoulder" />
+        <geom type="mesh"  mesh="shoulder" />
+        <!-- <body name="r_ur5_arm_upper_arm_link" pos="0 0.13585 0" quat="1.0 0 0. 0"> -->
+        <body name="r_ur5_arm_upper_arm_link" pos="0 0.13585 0" quat="0.707107 0 0.707107 0">
+            <inertial pos="0 0 0.28" mass="8.393" diaginertia="0.226891 0.226891 0.0151074" />
+            <joint class="UR5" name="r_ur5_arm_shoulder_lift_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-3.14159 0" /> <!--Range= -3.14159 3.14159-->
+            <geom type="mesh" contype="0" conaffinity="0" group="1"  mesh="upperarm" />
+            <geom type="mesh"  mesh="upperarm" />
+            <!-- <body name="r_ur5_arm_forearm_link" pos="0 -0.1197 0.425" quat="0.707107 0 -0.707107 0"> -->
+            <body name="r_ur5_arm_forearm_link" pos="0 -0.1197 0.425">
+                <inertial pos="0 0 0.25" mass="2.275" diaginertia="0.0494433 0.0494433 0.004095" />
+                <joint class="UR5" name="r_ur5_arm_elbow_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-3.14159 3.14159" />
+                <geom type="mesh" contype="0" conaffinity="0" group="1"  mesh="forearm" />
+                <geom type="mesh"  mesh="forearm" />
+                <!-- <body name="r_ur5_arm_wrist_1_link" pos="0 0 0.39225" quat="0.707107 0 -0.707107 0"> -->
+                <body name="r_ur5_arm_wrist_1_link" pos="0 0 0.39225" quat="0.707107 0 0.707107 0">
+                    <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="1.219" diaginertia="0.21942 0.111173 0.111173" />
+                    <joint class="UR5e" name="r_ur5_arm_wrist_1_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-3.14159 3.14159" />
+                    <geom type="mesh" contype="0" conaffinity="0" group="1"  mesh="wrist1" />
+                    <geom type="mesh"  mesh="wrist1" />
+                    <!-- <body name="r_ur5_arm_wrist_2_link" pos="0 0.093 0" quat="0.707107 0 0 -0.707107"> -->
+                    <body name="r_ur5_arm_wrist_2_link" pos="0 0.093 0">
+                        <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="1.219" diaginertia="0.21942 0.111173 0.111173" />
+                        <joint class="UR5e" name="r_ur5_arm_wrist_2_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-3.14159 3.14159" />
+                        <geom type="mesh" contype="0" conaffinity="0" group="1"  mesh="wrist2" />
+                        <geom type="mesh"  mesh="wrist2" />
+                        <!-- <body name="r_ur5_arm_wrist_3_link" pos="0 0 0.09465" quat="0.707107 0 0.707107 0"> -->
+                        <body name="r_ur5_arm_wrist_3_link" pos="0 0 0.09465" >
+                            <inertial pos="1.10016e-10 0.136364 4.88137e-05" quat="0.499969 0.500031 -0.500031 0.499969" mass="2.1389" diaginertia="0.0441119 0.0274263 0.0218065" />
+                            <joint class="UR5e" name="r_ur5_arm_wrist_3_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-3.14159 3.14159" />
+                            <geom type="mesh" contype="0" conaffinity="0" group="1"  mesh="wrist3" />
+                            <geom type="mesh"  mesh="wrist3" />
+                            <!-- <geom size="0.005 0.005 0.005" pos="-1.7949e-11 0.0723 0" quat="0.707107 0 0 0.707107" type="box" rgba="1 0 0 1"/> -->
+                            <!-- <geom pos="0 0.0823 0" quat="0.500199 -0.499801 0.499801 0.500199" type="mesh" contype="0" conaffinity="0" group="1" rgba="0 0 0 1" mesh="robotiq_fts300" /> -->
+                            <!-- <geom pos="0 0.0823 0" quat="0.500199 -0.499801 0.499801 0.500199" rgba="0 0 0 1" type="mesh" mesh="robotiq_fts300" /> -->
+                            <body name="ee_link" pos="0 0.0823 0" quat="0.707107 0 0 0.707107">
+                                <inertial pos="0 0 0" mass="0.001" diaginertia="1.66667e-08 1.66667e-08 1.66667e-08" />
+                                <geom size="0.005 0.005 0.005" pos="0 0 0" type="box" rgba="0 1 0 1"/>
+                            </body>                                
+                            <!-- add gripper here -->
+                            <include file="robot_gripper_r.xml"></include>
+
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </body>
+
+</mujoco>

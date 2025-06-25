@@ -1,0 +1,124 @@
+<mujoco>
+	<!-- right gripper -->
+    <tendon>
+		<!--Middlefinger tendons-->
+		<fixed name="r_middle12_cpl" range="0 1">
+			<joint joint="r_finger_middle_joint_1"  coef="1"/>
+			<joint joint="r_finger_middle_joint_2"  coef="-1.5"/>
+		</fixed>
+		<fixed name="r_middle23_cpl" range="0 1">
+			<joint joint="r_finger_middle_joint_2"  coef="1"/>
+			<joint joint="r_finger_middle_joint_3"  coef="-3.5"/>
+		</fixed>
+
+		<!--finger2 tendons-->
+        <fixed name="r_finger2_12_cpl" range="0 1">
+			<joint joint="r_finger_2_joint_1"  coef="1"/>
+			<joint joint="r_finger_2_joint_2"  coef="-1.5"/>
+		</fixed>
+		<fixed name="r_finger2_23_cpl" range="0 1">
+			<joint joint="r_finger_2_joint_2"  coef="1"/>
+			<joint joint="r_finger_2_joint_3"  coef="-3.5"/>
+		</fixed>
+
+		<!--Finger1 tendons-->
+        <fixed name="r_finger1_12_cpl" range="0 1">
+			<joint joint="r_finger_1_joint_1"  coef="1"/>
+			<joint joint="r_finger_1_joint_2"  coef="-1.5"/>
+		</fixed>
+		<fixed name="r_finger1_23_cpl" range="0 1">
+			<joint joint="r_finger_1_joint_2"  coef="1"/>
+			<joint joint="r_finger_1_joint_3"  coef="-3.5"/>
+		</fixed>
+	</tendon>
+
+	<!-- left gripper -->
+    <tendon>
+		<!--Middlefinger tendons-->
+		<fixed name="l_middle12_cpl" range="0 1">
+			<joint joint="l_finger_middle_joint_1"  coef="1"/>
+			<joint joint="l_finger_middle_joint_2"  coef="-1.5"/>
+		</fixed>
+		<fixed name="l_middle23_cpl" range="0 1">
+			<joint joint="l_finger_middle_joint_2"  coef="1"/>
+			<joint joint="l_finger_middle_joint_3"  coef="-3.5"/>
+		</fixed>
+
+		<!--finger2 tendons-->
+        <fixed name="l_finger2_12_cpl" range="0 1">
+			<joint joint="l_finger_2_joint_1"  coef="1"/>
+			<joint joint="l_finger_2_joint_2"  coef="-1.5"/>
+		</fixed>
+		<fixed name="l_finger2_23_cpl" range="0 1">
+			<joint joint="l_finger_2_joint_2"  coef="1"/>
+			<joint joint="l_finger_2_joint_3"  coef="-3.5"/>
+		</fixed>
+
+		<!--Finger1 tendons-->
+        <fixed name="l_finger1_12_cpl" range="0 1">
+			<joint joint="l_finger_1_joint_1"  coef="1"/>
+			<joint joint="l_finger_1_joint_2"  coef="-1.5"/>
+		</fixed>
+		<fixed name="l_finger1_23_cpl" range="0 1">
+			<joint joint="l_finger_1_joint_2"  coef="1"/>
+			<joint joint="l_finger_1_joint_3"  coef="-3.5"/>
+		</fixed>
+	</tendon>
+
+	<!-- right gripper -->
+    <equality>
+		<!-- GRIPPER Couplings -->
+		<tendon name="r_middle12_cpl" 	tendon1="r_middle12_cpl"/>
+		<tendon name="r_middle23_cpl" 	tendon1="r_middle23_cpl"/>
+
+        <tendon name="r_finger2_12_cpl" 	tendon1="r_finger2_12_cpl"/>
+		<tendon name="r_finger2_23_cpl" 	tendon1="r_finger2_23_cpl"/>
+
+        <tendon name="r_finger1_12_cpl" 	tendon1="r_finger1_12_cpl"/>
+		<tendon name="r_finger1_23_cpl" 	tendon1="r_finger1_23_cpl"/>
+
+		<!-- SCISSOR Coupling -->
+		<joint name="r_finger_12_scissor" joint1="r_palm_finger_2_joint" joint2="r_palm_finger_1_joint" polycoef="0 -1 0 0 0"/>
+	</equality>
+
+	<!-- left gripper -->
+    <equality>
+		<!-- GRIPPER Couplings -->
+		<tendon name="l_middle12_cpl" 	tendon1="l_middle12_cpl"/>
+		<tendon name="l_middle23_cpl" 	tendon1="l_middle23_cpl"/>
+
+        <tendon name="l_finger2_12_cpl" 	tendon1="l_finger2_12_cpl"/>
+		<tendon name="l_finger2_23_cpl" 	tendon1="l_finger2_23_cpl"/>
+
+        <tendon name="l_finger1_12_cpl" 	tendon1="l_finger1_12_cpl"/>
+		<tendon name="l_finger1_23_cpl" 	tendon1="l_finger1_23_cpl"/>
+
+		<!-- SCISSOR Coupling -->
+		<joint name="l_finger_12_scissor" joint1="l_palm_finger_2_joint" joint2="l_palm_finger_1_joint" polycoef="0 -1 0 0 0"/>
+	</equality>
+
+    <contact>
+        <!-- left gripper  -->
+        <!-- https://github.com/StanfordVL/robosuite/blob/7b727b075607466662ba8fac8bf8634936bdc58d/robosuite/models/assets/grippers/robotiq_gripper_s.xml#L111 -->
+        <exclude body1="l_finger_1_link_1" body2="l_gripper_palm_link"/>
+        <exclude body1="l_finger_2_link_1" body2="l_gripper_palm_link"/>
+        <exclude body1="l_finger_middle_link_1" body2="l_gripper_palm_link"/>
+        <exclude body1="l_finger_1_link_0" body2="l_gripper_palm_link"/>
+        <exclude body1="l_finger_2_link_0" body2="l_gripper_palm_link"/>
+        <exclude body1="l_finger_middle_link_0" body2="l_gripper_palm_link"/>
+        <exclude body1="l_finger_1_link_0" body2="l_finger_1_link_1"/>
+        <exclude body1="l_finger_2_link_0" body2="l_finger_2_link_1"/>
+		<exclude body1="l_finger_middle_link_0" body2="l_finger_middle_link_1"/>
+		
+        <!-- right gripper -->
+        <exclude body1="r_finger_1_link_1" body2="r_gripper_palm_link"/>
+        <exclude body1="r_finger_2_link_1" body2="r_gripper_palm_link"/>
+        <exclude body1="r_finger_middle_link_1" body2="r_gripper_palm_link"/>
+        <exclude body1="r_finger_1_link_0" body2="r_gripper_palm_link"/>
+        <exclude body1="r_finger_2_link_0" body2="r_gripper_palm_link"/>
+        <exclude body1="r_finger_middle_link_0" body2="r_gripper_palm_link"/>
+        <exclude body1="r_finger_1_link_0" body2="r_finger_1_link_1"/>
+        <exclude body1="r_finger_2_link_0" body2="r_finger_2_link_1"/>
+        <exclude body1="r_finger_middle_link_0" body2="r_finger_middle_link_1"/>
+    </contact>
+</mujoco>

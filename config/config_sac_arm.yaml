@@ -1,0 +1,20 @@
+model:
+  policy: "MultiInputPolicy"
+  batch_size: 64
+  learning_rate: 0.0003
+  buffer_size: 1000000
+  learning_starts: 100
+  train_freq: 1
+  gradient_steps: 1
+  ent_coef: "auto"
+  target_update_interval: 1
+  gamma: 0.99
+  tau: 0.005
+  verbose: 1
+
+training:
+  num_obstacles: 200
+  model_inputs: ["joint_positions", "depth"] # This should be a non-empty subset of ["pose", "velocity", "steering", "depth", "point_cloud", "joint_positions"]
+  total_timesteps: 10000
+  num_envs: 4
+  device: "mps" # Change to "cuda" for Nvidia or "cpu" for CPU
